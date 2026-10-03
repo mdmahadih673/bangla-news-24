@@ -1,5 +1,5 @@
 import React from "react";
-import { NewsItem } from "./HomePage";
+import { NewsItem } from "./home-page/HomePage";
 import Image from "next/image";
 
 const NewsCardPage = ({ news }: { news: NewsItem }) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import MainNewsPage from './MainNewsPage';
 import MostReadPage from './MostReadPage';
-import NewsCardPage from './NewsCardPage';
+import NewsCardPage from '../NewsCardPage';
 
 export interface NewsItem {
     id?: string | number;
