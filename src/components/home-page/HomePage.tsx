@@ -40,7 +40,7 @@ const HomePage = async () => {
                             <div className="grid grid-cols-3 gap-4 md:grid-cols-2 lg:grid-cols-3">
 
                                 {
-                                    section.articles?.map((newsItem) => <NewsCardPage key={newsItem.id ?? newsItem.title} news={newsItem} />)
+                                    section.articles?.map((newsItem) => <NewsCardPage key={newsItem.id ?? newsItem.title} news={newsItem} returnTo="/" />)
                                 }
                             </div>
                         </div>
@@ -59,4 +59,3 @@ const HomePage = async () => {
 };
 
 export default HomePage;
-
