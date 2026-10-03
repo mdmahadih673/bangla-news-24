@@ -1,5 +1,6 @@
 import React from "react";
 import { NewsItem } from "./HomePage";
+import Link from "next/link";
 
 const MostReadPage = ({ news }: { news: NewsItem[] }) => {
     return (
@@ -11,24 +12,32 @@ const MostReadPage = ({ news }: { news: NewsItem[] }) => {
             </h1>
 
             {/* News List */}
-            <ul className="space-y-6">
-                {news.slice(0, 10).map((item, index) => (
-                    <li
-                        key={`${item.title}-${index}`}
-                        className="group flex gap-3"
-                    >
-                        {/* Number */}
-                        <span className="min-w-[24px] text-xl font-normal text-red-500">
-                            {index + 1}
-                        </span>
+            <ol className="space-y-5">
+                {news
+                    .filter((item) => item.id !== undefined && item.id !== null)
+                    .slice(0, 10)
+                    .map((item, index) => (
+                        <li
+                            key={`${item.id}-${index}`}
+                            className="border-b border-gray-100 pb-5 last:border-0 last:pb-0"
+                        >
+                            <Link
+                                href={`/newsDetails/${encodeURIComponent(String(item.id))}?from=%2F`}
+                                className="group flex gap-3"
+                            >
+                            {/* Number */}
+                            <span className="min-w-6 text-xl font-bold text-red-500">
+                                {index + 1}
+                            </span>
 
-                        {/* Title */}
-                        <p className="cursor-pointer text-xl leading-6 text-gray-800 transition group-hover:text-red-600">
-                            {item.title}
-                        </p>
-                    </li>
+                            {/* Title */}
+                            <p className="text-base font-medium leading-7 text-gray-800 transition group-hover:text-red-600">
+                                {item.title}
+                            </p>
+                            </Link>
+                        </li>
                 ))}
-            </ul>
+            </ol>
 
         </div>
     );

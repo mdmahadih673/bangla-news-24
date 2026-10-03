@@ -15,7 +15,7 @@ const NewsCardPage = ({
     });
 
     return (
-        <Link href={`/news/${news.id}?from=${encodeURIComponent(returnTo)}`} className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition duration-300 hover:shadow-md">
+        <Link href={`/newsDetails/${encodeURIComponent(String(news.id))}?from=${encodeURIComponent(returnTo)}`} className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition duration-300 hover:shadow-md">
             <div className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition duration-300 hover:shadow-md">
 
                 {/* Image */}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import MarqueeText from "react-marquee-text";
 import "react-marquee-text/dist/styles.css";
 
@@ -22,17 +23,21 @@ const Marquee = async () => {
                 <div className="py-2 px-5 font-extrabold bg-red-800 text-sm sm:text-base">
                     সর্বশেষ
                 </div>
-
-                <MarqueeText direction="right" duration={10}>
-                    {newsList.map((newsItem, index) => (
-                        <span key={newsItem.id ?? `${newsItem.title ?? "news"}-${index}`}>
-                            <span className="mx-5">•</span>
-                            <span>
-                                {newsItem.title}
-                            </span>
-                        </span>
-                    ))}
-                </MarqueeText>
+                <div>
+                    <MarqueeText direction="right" duration={100}>
+                        {newsList.map((newsItem, index) => (
+                            <Link
+                                href={`/newsDetails/${encodeURIComponent(String(newsItem.id))}?from=%2F`}
+                                key={`${newsItem.id ?? newsItem.title ?? "news"}-${index}`}
+                            >
+                                <span>
+                                    <span className="mx-5">•</span>
+                                    <span>{newsItem.title}</span>
+                                </span>
+                            </Link>
+                        ))}
+                    </MarqueeText>
+                </div>
             </div>
 
         </div>
