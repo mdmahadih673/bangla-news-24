@@ -1,6 +1,7 @@
 import Image from "next/image";
 import logo from "@/assets/logo.webp";
 import { Button } from "@heroui/react";
+import NavbarLinksPage from "./NavbarLinks";
 
 const HeaderPage = () => {
     const date = new Date().toLocaleDateString("bn-BD", {
@@ -56,6 +57,7 @@ const HeaderPage = () => {
                 </div>
 
             </div>
+            <NavbarLinksPage />
         </header>
     );
 };
