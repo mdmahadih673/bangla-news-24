@@ -16,7 +16,7 @@ const Marquee = async () => {
     const newsList: NewsItem[] = Array.isArray(newsData?.data) ? newsData.data : [];
 
     return (
-        <div className=" bg-red-600 py-2 text-white font-semibold">
+        <div className=" bg-red-600 text-white font-semibold">
             <div className="flex items-center container mx-auto">
 
                 <div className="py-2 px-5 font-extrabold bg-red-800 text-sm sm:text-base">
