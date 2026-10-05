@@ -1,34 +1,33 @@
 "use client";
 
-import { signIn } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function SignInPage() {
     const router = useRouter();
-    const [errorMessage, setErrorMessage] = useState("");
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setErrorMessage("");
 
         const formData = new FormData(e.currentTarget);
-        const data = Object.fromEntries(formData.entries())
+        const data = Object.fromEntries(formData.entries());
 
-        const { error } = await signIn.email({
+        const { data: response, error } = await authClient.signIn.email({
             email: String(data.email),
             password: String(data.password),
-            callbackURL: "/",
         });
 
         if (error) {
-
+            toast.error(error.message);
             return;
         }
 
+        toast.success(`${response.user.name} সাইন ইন সফল হয়েছে`);
         router.push("/");
+
     };
 
     return (
@@ -74,12 +73,6 @@ export default function SignInPage() {
                     >
                         সাইন ইন করুন
                     </Button>
-
-                    {errorMessage && (
-                        <p role="alert" className="text-center text-sm text-red-600">
-                            {errorMessage}
-                        </p>
-                    )}
 
                     <p className="mt-1 text-center text-xs text-[#3a3a3a]">
                         অ্যাকাউন্ট নেই?{" "}

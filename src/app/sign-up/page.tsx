@@ -2,29 +2,35 @@
 
 import { signUp } from "@/lib/auth-client";
 import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react";
-import { redirect } from "next/navigation";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function SignUpPage() {
+    const router = useRouter();
+
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
+        const name = String(data.name);
 
-        const { data: resData, error } = await signUp.email({
-            name: String(data.name),
+        const { error } = await signUp.email({
+            name,
             email: String(data.email),
             image: typeof data.image === "string" ? data.image : undefined,
             password: String(data.password),
             callbackURL: "/sign-in",
         });
 
-        if (data) {
-            console.log(resData);
-            redirect('/')
-        } else {
-            
+        if (error) {
+            toast.error(error.message);
+            return;
         }
 
+        toast.success(`${name} সাইন আপ সফল হয়েছে`);
+        router.push("/sign-in");
 
     };
 
@@ -129,7 +135,9 @@ export default function SignUpPage() {
 
                     <p className="mt-1 text-center text-xs text-[#3a3a3a]">
                         অ্যাকাউন্ট আছে?{" "}
-                        <span className="font-medium text-[#d71920]">সাইন ইন করুন</span>
+                        <Link href={"/sign-in"} >
+                            <span className="font-medium text-[#d71920]">সাইন ইন করুন</span>
+                        </Link>
                     </p>
                 </Form>
             </div>

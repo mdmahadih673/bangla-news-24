@@ -2,12 +2,33 @@
 "use client"
 
 import { signOut, useSession } from '@/lib/auth-client';
-import { Avatar, Button } from '@heroui/react';
+import { Avatar, Button, Spinner } from '@heroui/react';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 const ButtonsPage = () => {
     const { data: session, isPending } = useSession()
     const user = session?.user
+
+    const handleSignOut = async () => {
+        const { error } = await signOut();
+
+        if (error) {
+            toast.error(error.message);
+            return;
+        }
+
+        toast.success("সাইন আউট সফল হয়েছে");
+    };
+
+    if (isPending) {
+        return (
+            <div className="flex flex-col items-center gap-2">
+                <Spinner size="xl" />
+                <span className="text-xs text-muted">Extra Large</span>
+            </div>
+        )
+    }
 
     return (
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
@@ -23,7 +44,7 @@ const ButtonsPage = () => {
                         </Avatar>
                     </div>
                     {session?.user ? <span>Welcome, {session.user.name}</span> : null}
-                    <button className=' btn btn-error' onClick={() => signOut()}>Sign out</button>
+                    <button className='btn btn-error' onClick={handleSignOut}>Sign out</button>
                 </div>
             ) : (
                 <div>
