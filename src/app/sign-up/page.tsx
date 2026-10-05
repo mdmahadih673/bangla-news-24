@@ -1,8 +1,8 @@
 "use client";
 
 import { signUp } from "@/lib/auth-client";
-import { Check } from "@gravity-ui/icons";
-import { Button, Description, FieldError, Form, Input, Label, TextField } from "@heroui/react";
+import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react";
+import { redirect } from "next/navigation";
 
 export default function SignUpPage() {
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -10,72 +10,130 @@ export default function SignUpPage() {
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
 
-
         const { data: resData, error } = await signUp.email({
             name: String(data.name),
             email: String(data.email),
+            image: typeof data.image === "string" ? data.image : undefined,
             password: String(data.password),
-            callbackURL: "/sign-in"
+            callbackURL: "/sign-in",
+        });
 
-        })
+        if (data) {
+            console.log(resData);
+            redirect('/')
+        } else {
+            console.log(error);
 
-        // Convert FormData to plain object
+        }
+
 
     };
 
     return (
-        <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
-            <TextField
-                isRequired
-                name="email"
-                type="email"
-                validate={(value) => {
-                    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-                        return "Please enter a valid email address";
-                    }
+        <section className="w-full bg-[#fafafa] px-5 py-4">
+            <div className="mx-auto w-full max-w-130">
+                <Form className="flex flex-col gap-3" onSubmit={onSubmit}>
+                    <h1 className="mb-1 text-center text-2xl font-bold tracking-tight text-[#d92020]">
+                        সাইন আপ
+                    </h1>
 
-                    return null;
-                }}
-            >
-                <Label>Email</Label>
-                <Input placeholder="john@example.com" />
-                <FieldError />
-            </TextField>
+                    <TextField
+                        isRequired
+                        name="name"
+                        validate={(value) => {
+                            if (value.length < 3) {
+                                return "Name must be at least 3 characters";
+                            }
+                            return null;
+                        }}
+                    >
+                        <Label className="mb-1 block text-xs font-medium text-[#1f1f1f]">নাম</Label>
+                        <Input
+                            className="h-9 rounded-md border border-[#cfcfcf] bg-white px-3 text-sm text-[#1f1f1f] shadow-none placeholder:text-[#7d7d7d]"
+                            placeholder=""
+                        />
+                        <FieldError className="text-xs text-red-500" />
+                    </TextField>
 
-            <TextField
-                isRequired
-                minLength={8}
-                name="password"
-                type="password"
-                validate={(value) => {
-                    if (value.length < 8) {
-                        return "Password must be at least 8 characters";
-                    }
-                    if (!/[A-Z]/.test(value)) {
-                        return "Password must contain at least one uppercase letter";
-                    }
-                    if (!/[0-9]/.test(value)) {
-                        return "Password must contain at least one number";
-                    }
+                    <TextField
+                        isRequired
+                        name="image"
+                        validate={(value) => {
+                            if (value.length < 3) {
+                                return "Name must be at least 3 characters";
+                            }
+                            return null;
+                        }}
+                    >
+                        <Label className="mb-1 block text-xs font-medium text-[#1f1f1f]">ইমেজ</Label>
+                        <Input
+                            className="h-9 rounded-md border border-[#cfcfcf] bg-white px-3 text-sm text-[#1f1f1f] shadow-none placeholder:text-[#7d7d7d]"
+                            placeholder=""
+                        />
+                        <FieldError className="text-xs text-red-500" />
+                    </TextField>
 
-                    return null;
-                }}
-            >
-                <Label>Password</Label>
-                <Input placeholder="Enter your password" />
-                <Description>Must be at least 8 characters with 1 uppercase and 1 number</Description>
-                <FieldError />
-            </TextField>
+                    <TextField
+                        isRequired
+                        name="email"
+                        type="email"
+                        validate={(value) => {
+                            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+                                return "Please enter a valid email address";
+                            }
 
-            <div className="flex gap-2">
-                <Button type="submit">
-                    <Check />
-                    Submit
-                </Button>
-                <Button type="reset" variant="secondary">
-                    Reset
-                </Button>
+                            return null;
+                        }}
+                    >
+                        <Label className="mb-1 block text-xs font-medium text-[#1f1f1f]">ইমেইল</Label>
+                        <Input
+                            className="h-9 rounded-md border border-[#cfcfcf] bg-white px-3 text-sm text-[#1f1f1f] shadow-none placeholder:text-[#7d7d7d]"
+                            placeholder=""
+                        />
+                        <FieldError className="text-xs text-red-500" />
+                    </TextField>
+
+                    <TextField
+                        isRequired
+                        minLength={8}
+                        name="password"
+                        type="password"
+                        validate={(value) => {
+                            if (value.length < 8) {
+                                return "Password must be at least 8 characters";
+                            }
+                            if (!/[A-Z]/.test(value)) {
+                                return "Password must contain at least one uppercase letter";
+                            }
+                            if (!/[0-9]/.test(value)) {
+                                return "Password must contain at least one number";
+                            }
+
+                            return null;
+                        }}
+                    >
+                        <Label className="mb-1 block text-xs font-medium text-[#1f1f1f]">পাসওয়ার্ড</Label>
+                        <Input
+                            type="password"
+                            className="h-9 rounded-md border border-[#cfcfcf] bg-white px-3 text-sm text-[#1f1f1f] shadow-none placeholder:text-[#7d7d7d]"
+                            placeholder=""
+                        />
+                        <FieldError className="text-xs text-red-500" />
+                    </TextField>
+
+                    <Button
+                        type="submit"
+                        className="mt-1 h-9 w-full rounded-md bg-[#c9000b] text-sm font-semibold text-white shadow-none hover:bg-[#bf1518]"
+                    >
+                        সাইন আপ করুন
+                    </Button>
+
+                    <p className="mt-1 text-center text-xs text-[#3a3a3a]">
+                        অ্যাকাউন্ট আছে?{" "}
+                        <span className="font-medium text-[#d71920]">সাইন ইন করুন</span>
+                    </p>
+                </Form>
             </div>
-        </Form>
+        </section>
     );
 }
