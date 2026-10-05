@@ -3,6 +3,7 @@ import "./globals.css";
 import HeaderPage from "@/components/header";
 import Marquee from "@/components/Marquee";
 import { ToastContainer } from "react-toastify";
+import NavbarLinksPage from "@/components/NavbarLinks";
 
 const notoSerifBangla = Noto_Serif_Bengali({
   subsets: ["latin", "bengali"],
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <HeaderPage />
+        
         <Marquee />
         <main className="w-full">
 

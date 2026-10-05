@@ -19,12 +19,13 @@ const Marquee = async () => {
     return (
         <div className=" bg-red-600 sticky top-0 text-white font-semibold">
             <div className="flex items-center container mx-auto">
-
-                <div className="py-2 px-5 font-extrabold bg-red-800 text-sm sm:text-base">
-                    সর্বশেষ
-                </div>
+                <Link href={'/'}>
+                    <div className="py-2 px-5 font-extrabold bg-red-800 text-sm sm:text-base">
+                        সর্বশেষ
+                    </div>
+                </Link>
                 <div>
-                    <MarqueeText direction="right" duration={100}>
+                    <MarqueeText direction="right" duration={80}>
                         {newsList.map((newsItem, index) => (
                             <Link
                                 href={`/newsDetails/${encodeURIComponent(String(newsItem.id))}?from=%2F`}

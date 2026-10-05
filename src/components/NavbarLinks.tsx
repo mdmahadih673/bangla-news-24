@@ -22,7 +22,7 @@ const NavbarLinksPage = async () => {
     );
 
     return (
-        <div className="flex w-full items-center justify-center gap-4 border-b border-gray-200 bg-white py-2 text-sm font-medium text-gray-700 shadow-sm sm:gap-6 sm:py-3 sm:text-base">
+        <div className="flex w-full items-center sticky top-0 justify-center gap-4 border-b border-gray-200 bg-white py-2 text-sm font-medium text-gray-700 shadow-sm sm:gap-6 sm:py-3 sm:text-base">
 
             <Link
                 href="/"
