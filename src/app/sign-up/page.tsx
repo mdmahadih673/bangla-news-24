@@ -1,12 +1,26 @@
 "use client";
 
-import { signUp } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
 import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function SignUpPage() {
+    const hendelGithubSignIn = async () => {
+        const { data, error } = await signIn.social({
+            provider: "github",
+            callbackURL: "/",
+        });
+
+        if (error) {
+            toast.error(error.message);
+        }
+    };
+
+
+
+
     const router = useRouter();
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -125,6 +139,13 @@ export default function SignUpPage() {
                         />
                         <FieldError className="text-xs text-red-500" />
                     </TextField>
+                    <Button
+                        type="button"
+                        className="min-h-11 w-full rounded-xl border border-white/10 bg-white/5 font-medium text-blue-600 transition hover:bg-white/10"
+                        onClick={hendelGithubSignIn}
+                    >
+                        Sign up with Github
+                    </Button>
 
                     <Button
                         type="submit"

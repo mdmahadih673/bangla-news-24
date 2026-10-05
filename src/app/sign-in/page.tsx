@@ -1,12 +1,24 @@
 "use client";
 
-import { authClient } from "@/lib/auth-client";
+import { authClient, signIn } from "@/lib/auth-client";
 import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { LogoGithub } from "@gravity-ui/icons";
 
 export default function SignInPage() {
+    const handleSocialSignIn = async (provider: "google" | "github") => {
+        const { error } = await signIn.social({
+            provider,
+            callbackURL: "/",
+        });
+
+        if (error) {
+            toast.error(error.message);
+        }
+    };
+
     const router = useRouter();
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,6 +80,28 @@ export default function SignInPage() {
                     </TextField>
 
                     <Button
+                        type="button"
+                        className="min-h-11 w-full rounded-lg border border-gray-300 bg-white font-medium text-gray-800 shadow-sm transition hover:border-gray-400 hover:bg-gray-50"
+                        onClick={() => handleSocialSignIn("google")}
+                    >
+                        <span aria-hidden="true" className="text-lg font-bold text-blue-600">G</span>
+                        গুগল দিয়ে সাইন ইন করুন
+                    </Button>
+                    <div className="flex items-center gap-3 text-xs text-gray-500">
+                        <span className="h-px flex-1 bg-gray-200" />
+                        অথবা
+                        <span className="h-px flex-1 bg-gray-200" />
+                    </div>
+                    <Button
+                        type="button"
+                        className="min-h-11 w-full rounded-lg border border-gray-300 bg-white font-medium text-gray-800 shadow-sm transition hover:border-gray-400 hover:bg-gray-50"
+                        onClick={() => handleSocialSignIn("github")}
+                    >
+                        <LogoGithub aria-hidden="true" className="size-5" />
+                        গিটহাব দিয়ে সাইন ইন করুন
+                    </Button>
+
+                    <Button
                         type="submit"
                         className="mt-1 h-9 w-full rounded-md bg-[#c9000b] text-sm font-semibold text-white shadow-none hover:bg-[#bf1518]"
                     >
@@ -81,6 +115,7 @@ export default function SignInPage() {
                         </Link>
                     </p>
                 </Form>
+
             </div>
         </section>
     );
