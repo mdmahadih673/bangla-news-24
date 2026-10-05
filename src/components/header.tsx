@@ -2,6 +2,7 @@ import Image from "next/image";
 import logo from "@/assets/logo.webp";
 import { Button } from "@heroui/react";
 import NavbarLinksPage from "./NavbarLinks";
+import Link from "next/link";
 
 const HeaderPage = () => {
     const date = new Date().toLocaleDateString("bn-BD", {
@@ -40,19 +41,23 @@ const HeaderPage = () => {
 
                 {/* Right Side Buttons */}
                 <div className="ml-auto flex items-center gap-2 sm:gap-3">
+                    <Link href={'/sign-in'}>
 
-                    <Button
-                        variant="ghost"
-                        className="font-medium text-gray-700 hover:bg-gray-100"
-                    >
-                        Login
-                    </Button>
+                        <Button
+                            variant="ghost"
+                            className="font-medium text-gray-700 hover:bg-gray-100"
+                        >
+                            Sign In
+                        </Button>
+                    </Link>
 
-                    <Button
-                        className="rounded-md bg-red-700 px-4 font-medium text-white hover:bg-red-800"
-                    >
-                        Sign Up
-                    </Button>
+                    <Link href={'/sign-up'}>
+                        <Button
+                            className="rounded-md bg-red-700 px-4 font-medium text-white hover:bg-red-800"
+                        >
+                            Sign Up
+                        </Button>
+                    </Link>
 
                 </div>
 
