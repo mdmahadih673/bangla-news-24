@@ -22,7 +22,7 @@ export default function SignUpPage() {
             console.log(resData);
             redirect('/')
         } else {
-            console.log(error);
+            
 
         }
 
