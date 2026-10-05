@@ -1,15 +1,16 @@
 "use client";
 
 import { signIn, signUp } from "@/lib/auth-client";
+import { LogoGithub } from "@gravity-ui/icons";
 import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function SignUpPage() {
-    const hendelGithubSignIn = async () => {
-        const { data, error } = await signIn.social({
-            provider: "github",
+    const handleSocialSignIn = async (provider: "google" | "github") => {
+        const { error } = await signIn.social({
+            provider,
             callbackURL: "/",
         });
 
@@ -139,13 +140,32 @@ export default function SignUpPage() {
                         />
                         <FieldError className="text-xs text-red-500" />
                     </TextField>
+
+
+
                     <Button
                         type="button"
-                        className="min-h-11 w-full rounded-xl border border-white/10 bg-white/5 font-medium text-blue-600 transition hover:bg-white/10"
-                        onClick={hendelGithubSignIn}
+                        className="min-h-11 w-full rounded-lg border border-gray-300 bg-white font-medium text-gray-800 shadow-sm transition hover:border-gray-400 hover:bg-gray-50"
+                        onClick={() => handleSocialSignIn("google")}
                     >
-                        Sign up with Github
+                        <span aria-hidden="true" className="text-lg font-bold text-blue-600">G</span>
+                        গুগল দিয়ে সাইন ইন করুন
                     </Button>
+                    <div className="flex items-center gap-3 text-xs text-gray-500">
+                        <span className="h-px flex-1 bg-gray-200" />
+                        অথবা
+                        <span className="h-px flex-1 bg-gray-200" />
+                    </div>
+                    <Button
+                        type="button"
+                        className="min-h-11 w-full rounded-lg border border-gray-300 bg-white font-medium text-gray-800 shadow-sm transition hover:border-gray-400 hover:bg-gray-50"
+                        onClick={() => handleSocialSignIn("github")}
+                    >
+                        <LogoGithub aria-hidden="true" className="size-5" />
+                        গিটহাব দিয়ে সাইন ইন করুন
+                    </Button>
+
+
 
                     <Button
                         type="submit"
