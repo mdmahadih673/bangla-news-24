@@ -18,14 +18,17 @@ const HeaderPage = () => {
                 <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-3">
 
                     <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl">
-                        <Image
-                            src={logo}
-                            alt="Bangla News 24 Logo"
-                            width={40}
-                            height={40}
-                            className="h-10 w-10 object-contain"
-                            priority
-                        />
+                        <Link href={'/'}>
+
+                            <Image
+                                src={logo}
+                                alt="Bangla News 24 Logo"
+                                width={40}
+                                height={40}
+                                className="h-10 w-10 object-contain"
+                                priority
+                            />
+                        </Link>
                     </div>
 
                     <div className="leading-tight">

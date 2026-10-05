@@ -23,7 +23,7 @@ const ButtonsPage = () => {
                         </Avatar>
                     </div>
                     {session?.user ? <span>Welcome, {session.user.name}</span> : null}
-                    <Button variant="danger" onClick={() => signOut()}>Sign out</Button>
+                    <button className=' btn btn-error' onClick={() => signOut()}>Sign out</button>
                 </div>
             ) : (
                 <div>
