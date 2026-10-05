@@ -35,13 +35,15 @@ const ButtonsPage = () => {
             {user ? (
                 <div className='flex items-center gap-2'>
                     <div className="flex items-center gap-4">
-                        <Avatar>
-                            <Avatar.Image
-                                alt="Blue"
-                                src={user.image as string}
-                            />
-                            <Avatar.Fallback>B</Avatar.Fallback>
-                        </Avatar>
+                        <Link href={'/profile'}>
+                            <Avatar>
+                                <Avatar.Image
+                                    alt="Blue"
+                                    src={user.image as string}
+                                />
+                                <Avatar.Fallback>B</Avatar.Fallback>
+                            </Avatar>
+                        </Link>
                     </div>
                     {session?.user ? <span>Welcome, {session.user.name}</span> : null}
                     <button className='btn btn-error' onClick={handleSignOut}>Sign out</button>
@@ -59,15 +61,16 @@ const ButtonsPage = () => {
 
                     <Link href={'/sign-up'}>
                         <Button
-                        variant="danger"
+                            variant="danger"
                             className="rounded-md bg-red-700 px-4 font-medium text-white hover:bg-red-800"
                         >
                             Sign Up
                         </Button>
                     </Link>
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 };
 
