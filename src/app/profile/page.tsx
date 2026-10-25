@@ -26,8 +26,8 @@ export default function ProfilePage() {
     }
 
     return (
-        <section className="w-full bg-[#fafafa] px-5 py-10">
-            <div className="mx-auto flex w-full max-w-xl flex-col items-center gap-5 rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
+        <section className="w-full px-5 py-10">
+            <div className="mx-auto flex w-full max-w-xl flex-col items-center gap-5 rounded-2xl border border-stone-200 bg-white p-8 shadow-lg">
                 <Link
                     href="/edit"
                     className="ml-auto inline-flex min-h-10 items-center gap-2 rounded-lg bg-[#c9000b] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#a90009] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c9000b]"

@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# বাংলা নিউজ ২৪
 
-## Getting Started
+বাংলাদেশ ও বিশ্বের খবর পড়ার একটি আধুনিক নিউজ পোর্টাল। হোমপেজে প্রধান সংবাদ, বিভাগভিত্তিক খবর, সর্বাধিক পঠিত তালিকা এবং ইমেইল/গুগল/গিটহাব দিয়ে অ্যাকাউন্ট ব্যবস্থা আছে।
 
-First, run the development server:
+## বৈশিষ্ট্য
+
+- প্রধান খবর, বিভাগ এবং সর্বাধিক পঠিত তালিকা
+- সংবাদের বিস্তারিত পাতা, ছবি ও সাবহেডিং সহ
+- ইমেইল, গুগল ও গিটহাব সাইন ইন/সাইন আপ
+- প্রোফাইল দেখা ও সম্পাদনা
+- সরাসরি সময়, সর্বশেষ খবরের মারকি, এবং সেশনের শুরুতে জরুরি ব্যানার
+- লোগোতে পাঁচবার ক্লিক করলে একটি গোপন শিরোনাম খোলে
+
+## টেক স্ট্যাক
+
+| স্তর | প্রযুক্তি |
+| --- | --- |
+| ফ্রেমওয়ার্ক | Next.js 16 (App Router), React 19 |
+| স্টাইল | Tailwind CSS 4, DaisyUI, HeroUI |
+| অথেন্টিকেশন | Better Auth + MongoDB |
+| খবরের উৎস | `https://news-api-v2.vercel.app` |
+
+## শুরু করার নিয়ম
+
+প্রয়োজন: Node.js 20+ এবং একটি MongoDB ডেটাবেস।
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+সাইট খুলুন: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+প্রোডাকশন বিল্ড:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## এনভায়রনমেন্ট ভেরিয়েবল
 
-To learn more about Next.js, take a look at the following resources:
+প্রজেক্ট রুটে `.env` ফাইল তৈরি করুন:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=http://localhost:3000
+BETTER_AUTH_MONGO_URL=
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 
-## Deploy on Vercel
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `BETTER_AUTH_SECRET` — অথেন্টিকেশন সাইনিং কী
+- `BETTER_AUTH_URL` — অ্যাপের পাবলিক URL
+- `BETTER_AUTH_MONGO_URL` — MongoDB কানেকশন স্ট্রিং
+- গুগল/গিটহাব কী — সোশ্যাল লগইনের জন্য OAuth অ্যাপ থেকে নিন
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## স্ক্রিপ্ট
+
+| কমান্ড | কাজ |
+| --- | --- |
+| `npm run dev` | ডেভেলপমেন্ট সার্ভার |
+| `npm run build` | প্রোডাকশন বিল্ড |
+| `npm start` | বিল্ড চালানো |
+| `npm run lint` | ESLint |
+
+## প্রজেক্ট স্ট্রাকচার
+
+```text
+src/
+  app/                 # রাউট: হোম, ক্যাটাগরি, খবর, অথ, প্রোফাইল
+  components/          # হেডার, ফুটার, নিউজ কার্ড, মারকি
+  lib/                 # Better Auth সার্ভার ও ক্লায়েন্ট
+```
+
+## অথেন্টিকেশন নোট
+
+Better Auth MongoDB অ্যাডাপ্টার ব্যবহার করে `bangla-news-24` ডেটাবেসে ইউজার সংরক্ষণ করে। ইমেইল-পাসওয়ার্ড এবং গুগল/গিটহাব অ্যাকাউন্ট লিঙ্ক করা যায়। OAuth কলব্যাক URL আপনার অথেন্টিকেশন প্রোভাইডারে `BETTER_AUTH_URL` অনুযায়ী সেট করুন।

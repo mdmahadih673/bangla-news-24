@@ -79,7 +79,7 @@ const NewsDetailsPage = async ({
             : null;
 
     return (
-        <main className="min-h-screen bg-slate-50 px-4 py-8 sm:py-12">
+        <main className="min-h-screen px-4 py-8 sm:py-12">
             <div className="mx-auto max-w-5xl">
                 <Link
                     href={returnTo}

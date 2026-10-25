@@ -2,186 +2,186 @@
 
 import { signIn, signUp } from "@/lib/auth-client";
 import { LogoGithub } from "@gravity-ui/icons";
-import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react";
+import {
+  Button,
+  FieldError,
+  Form,
+  Input,
+  Label,
+  TextField,
+} from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function SignUpPage() {
-    const handleSocialSignIn = async (provider: "google" | "github") => {
-        const { error } = await signIn.social({
-            provider,
-            callbackURL: "/",
-        });
+  const router = useRouter();
 
-        if (error) {
-            toast.error(error.message);
-        }
-    };
+  const handleSocialSignIn = async (provider: "google" | "github") => {
+    const { error } = await signIn.social({
+      provider,
+      callbackURL: "/",
+    });
 
+    if (error) {
+      toast.error(error.message);
+    }
+  };
 
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    const name = String(data.name);
 
-    const router = useRouter();
+    const { error } = await signUp.email({
+      name,
+      email: String(data.email),
+      image: typeof data.image === "string" ? data.image : undefined,
+      password: String(data.password),
+      callbackURL: "/sign-in",
+    });
 
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success(`${name} সাইন আপ সফল হয়েছে`);
+      router.push("/sign-in");
+    }
+  };
 
-        const formData = new FormData(e.currentTarget);
-        const data = Object.fromEntries(formData.entries());
-        const name = String(data.name);
+  return (
+    <section className="flex w-full justify-center px-5 py-12">
+      <div className="w-full max-w-[440px] rounded-2xl border border-stone-200 bg-white p-7 shadow-lg">
+        <p className="text-center text-xs font-bold tracking-[0.2em] text-[#b42318]">
+          বাংলা নিউজ ২৪
+        </p>
+        <Form className="mt-3 flex flex-col gap-3" onSubmit={onSubmit}>
+          <h1 className="mb-1 text-center text-2xl font-black tracking-tight text-stone-900">
+            সাইন আপ
+          </h1>
 
-        const { error } = await signUp.email({
-            name,
-            email: String(data.email),
-            image: typeof data.image === "string" ? data.image : undefined,
-            password: String(data.password),
-            callbackURL: "/sign-in",
-        });
+          <TextField
+            isRequired
+            name="name"
+            validate={(value) => {
+              if (value.length < 3) {
+                return "নাম অন্তত ৩ অক্ষরের হতে হবে";
+              }
+              return null;
+            }}
+          >
+            <Label className="mb-1 block text-xs font-medium text-stone-800">
+              নাম
+            </Label>
+            <Input className="h-10 rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-900 shadow-none" />
+            <FieldError className="text-xs text-red-500" />
+          </TextField>
 
-        if (error) {
-            toast.error(error.message);
-            return;
-        }
+          <TextField
+            name="image"
+            type="url"
+            validate={(value) => {
+              if (value && value.length < 8) {
+                return "সঠিক ছবির URL দিন";
+              }
+              return null;
+            }}
+          >
+            <Label className="mb-1 block text-xs font-medium text-stone-800">
+              প্রোফাইল ছবির URL (ঐচ্ছিক)
+            </Label>
+            <Input className="h-10 rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-900 shadow-none" />
+            <FieldError className="text-xs text-red-500" />
+          </TextField>
 
-        toast.success(`${name} সাইন আপ সফল হয়েছে`);
-        router.push("/sign-in");
+          <TextField
+            isRequired
+            name="email"
+            type="email"
+            validate={(value) => {
+              if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+                return "সঠিক ইমেইল ঠিকানা লিখুন";
+              }
+              return null;
+            }}
+          >
+            <Label className="mb-1 block text-xs font-medium text-stone-800">
+              ইমেইল
+            </Label>
+            <Input className="h-10 rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-900 shadow-none" />
+            <FieldError className="text-xs text-red-500" />
+          </TextField>
 
-    };
+          <TextField
+            isRequired
+            minLength={8}
+            name="password"
+            type="password"
+            validate={(value) => {
+              if (value.length < 8) {
+                return "পাসওয়ার্ড অন্তত ৮ অক্ষরের হতে হবে";
+              }
+              if (!/[A-Z]/.test(value)) {
+                return "অন্তত একটি বড় হাতের অক্ষর থাকতে হবে";
+              }
+              if (!/[0-9]/.test(value)) {
+                return "অন্তত একটি সংখ্যা থাকতে হবে";
+              }
+              return null;
+            }}
+          >
+            <Label className="mb-1 block text-xs font-medium text-stone-800">
+              পাসওয়ার্ড
+            </Label>
+            <Input
+              type="password"
+              className="h-10 rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-900 shadow-none"
+            />
+            <FieldError className="text-xs text-red-500" />
+          </TextField>
 
-    return (
-        <section className="w-full bg-[#fafafa] px-5 py-4">
-            <div className="mx-auto w-full max-w-130">
-                <Form className="flex flex-col gap-3" onSubmit={onSubmit}>
-                    <h1 className="mb-1 text-center text-2xl font-bold tracking-tight text-[#d92020]">
-                        সাইন আপ
-                    </h1>
+          <Button
+            type="submit"
+            className="mt-1 h-10 w-full rounded-md bg-[#b42318] text-sm font-semibold text-white shadow-none hover:bg-[#8f1d13]"
+          >
+            সাইন আপ করুন
+          </Button>
 
-                    <TextField
-                        isRequired
-                        name="name"
-                        validate={(value) => {
-                            if (value.length < 3) {
-                                return "Name must be at least 3 characters";
-                            }
-                            return null;
-                        }}
-                    >
-                        <Label className="mb-1 block text-xs font-medium text-[#1f1f1f]">নাম</Label>
-                        <Input
-                            className="h-9 rounded-md border border-[#cfcfcf] bg-white px-3 text-sm text-[#1f1f1f] shadow-none placeholder:text-[#7d7d7d]"
-                            placeholder=""
-                        />
-                        <FieldError className="text-xs text-red-500" />
-                    </TextField>
+          <div className="flex items-center gap-3 text-xs text-stone-500">
+            <span className="h-px flex-1 bg-stone-200" />
+            অথবা
+            <span className="h-px flex-1 bg-stone-200" />
+          </div>
 
-                    <TextField
-                        isRequired
-                        name="image"
-                        validate={(value) => {
-                            if (value.length < 3) {
-                                return "Name must be at least 3 characters";
-                            }
-                            return null;
-                        }}
-                    >
-                        <Label className="mb-1 block text-xs font-medium text-[#1f1f1f]">ইমেজ</Label>
-                        <Input
-                            className="h-9 rounded-md border border-[#cfcfcf] bg-white px-3 text-sm text-[#1f1f1f] shadow-none placeholder:text-[#7d7d7d]"
-                            placeholder=""
-                        />
-                        <FieldError className="text-xs text-red-500" />
-                    </TextField>
+          <Button
+            type="button"
+            className="min-h-11 w-full rounded-lg border border-stone-300 bg-white font-medium text-stone-800 shadow-sm transition hover:border-stone-400 hover:bg-stone-50"
+            onClick={() => handleSocialSignIn("google")}
+          >
+            <span aria-hidden="true" className="text-lg font-bold text-blue-600">
+              G
+            </span>
+            গুগল দিয়ে সাইন ইন করুন
+          </Button>
+          <Button
+            type="button"
+            className="min-h-11 w-full rounded-lg border border-stone-300 bg-white font-medium text-stone-800 shadow-sm transition hover:border-stone-400 hover:bg-stone-50"
+            onClick={() => handleSocialSignIn("github")}
+          >
+            <LogoGithub aria-hidden="true" className="size-5" />
+            গিটহাব দিয়ে সাইন ইন করুন
+          </Button>
 
-                    <TextField
-                        isRequired
-                        name="email"
-                        type="email"
-                        validate={(value) => {
-                            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-                                return "Please enter a valid email address";
-                            }
-
-                            return null;
-                        }}
-                    >
-                        <Label className="mb-1 block text-xs font-medium text-[#1f1f1f]">ইমেইল</Label>
-                        <Input
-                            className="h-9 rounded-md border border-[#cfcfcf] bg-white px-3 text-sm text-[#1f1f1f] shadow-none placeholder:text-[#7d7d7d]"
-                            placeholder=""
-                        />
-                        <FieldError className="text-xs text-red-500" />
-                    </TextField>
-
-                    <TextField
-                        isRequired
-                        minLength={8}
-                        name="password"
-                        type="password"
-                        validate={(value) => {
-                            if (value.length < 8) {
-                                return "Password must be at least 8 characters";
-                            }
-                            if (!/[A-Z]/.test(value)) {
-                                return "Password must contain at least one uppercase letter";
-                            }
-                            if (!/[0-9]/.test(value)) {
-                                return "Password must contain at least one number";
-                            }
-
-                            return null;
-                        }}
-                    >
-                        <Label className="mb-1 block text-xs font-medium text-[#1f1f1f]">পাসওয়ার্ড</Label>
-                        <Input
-                            type="password"
-                            className="h-9 rounded-md border border-[#cfcfcf] bg-white px-3 text-sm text-[#1f1f1f] shadow-none placeholder:text-[#7d7d7d]"
-                            placeholder=""
-                        />
-                        <FieldError className="text-xs text-red-500" />
-                    </TextField>
-
-
-
-                    <Button
-                        type="button"
-                        className="min-h-11 w-full rounded-lg border border-gray-300 bg-white font-medium text-gray-800 shadow-sm transition hover:border-gray-400 hover:bg-gray-50"
-                        onClick={() => handleSocialSignIn("google")}
-                    >
-                        <span aria-hidden="true" className="text-lg font-bold text-blue-600">G</span>
-                        গুগল দিয়ে সাইন ইন করুন
-                    </Button>
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
-                        <span className="h-px flex-1 bg-gray-200" />
-                        অথবা
-                        <span className="h-px flex-1 bg-gray-200" />
-                    </div>
-                    <Button
-                        type="button"
-                        className="min-h-11 w-full rounded-lg border border-gray-300 bg-white font-medium text-gray-800 shadow-sm transition hover:border-gray-400 hover:bg-gray-50"
-                        onClick={() => handleSocialSignIn("github")}
-                    >
-                        <LogoGithub aria-hidden="true" className="size-5" />
-                        গিটহাব দিয়ে সাইন ইন করুন
-                    </Button>
-
-
-
-                    <Button
-                        type="submit"
-                        className="mt-1 h-9 w-full rounded-md bg-[#c9000b] text-sm font-semibold text-white shadow-none hover:bg-[#bf1518]"
-                    >
-                        সাইন আপ করুন
-                    </Button>
-
-                    <p className="mt-1 text-center text-xs text-[#3a3a3a]">
-                        অ্যাকাউন্ট আছে?{" "}
-                        <Link href={"/sign-in"} >
-                            <span className="font-medium text-[#d71920]">সাইন ইন করুন</span>
-                        </Link>
-                    </p>
-                </Form>
-            </div>
-        </section>
-    );
+          <p className="mt-1 text-center text-xs text-stone-600">
+            অ্যাকাউন্ট আছে?{" "}
+            <Link href="/sign-in">
+              <span className="font-medium text-[#b42318]">সাইন ইন করুন</span>
+            </Link>
+          </p>
+        </Form>
+      </div>
+    </section>
+  );
 }

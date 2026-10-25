@@ -22,8 +22,8 @@ export default function EditProfilePage() {
     }
 
     return (
-        <section className="w-full bg-[#fafafa] px-5 py-10">
-            <div className="mx-auto w-full max-w-xl rounded-xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+        <section className="w-full px-5 py-10">
+            <div className="mx-auto w-full max-w-xl rounded-2xl border border-stone-200 bg-white p-6 shadow-lg sm:p-8">
                 <div className="mb-6 flex items-center justify-between gap-4">
                     <h1 className="text-2xl font-bold text-[#d92020]">প্রোফাইল সম্পাদনা</h1>
                     <Link

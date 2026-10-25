@@ -2,6 +2,74 @@
 @import "@heroui/styles";
 @plugin "daisyui";
 
+:root {
+  --ink: #111827;
+  --paper: #f4f1ea;
+  --accent: #b42318;
+}
+
 body {
-  @apply bg-gray-100 text-base-content;
+  @apply bg-stone-100 text-base-content;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgb(0 0 0 / 0.03) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.72);
+  }
+}
+
+@keyframes breaking-drop {
+  0% {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes breaking-scan {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes paper-float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-120px) rotate(28deg);
+    opacity: 0;
+  }
+}
+
+.live-dot {
+  animation: live-pulse 1.4s ease-in-out infinite;
+}
+
+.breaking-drop {
+  animation: breaking-drop 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.breaking-scan {
+  animation: breaking-scan 1.8s linear infinite;
+}
+
+.paper-float {
+  animation: paper-float 1.4s ease-out forwards;
 }
