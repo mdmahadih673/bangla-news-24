@@ -70,7 +70,7 @@ const HomePage = async () => {
       <aside className="lg:col-span-1">
         <div className="space-y-5 lg:sticky lg:top-16">
           <MostReadPage news={mostReadList} />
-          <SurprisePick news={newsList.flatMap((section) => section.articles ?? [])} />
+          <SurprisePick />
         </div>
       </aside>
     </div>
